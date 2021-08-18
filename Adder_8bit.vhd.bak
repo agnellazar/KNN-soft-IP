@@ -1,0 +1,42 @@
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity FullAdd is port ( 
+	A,B : in std_logic_vector(7 downto 0);
+	Cin : in std_logic; 
+	Sum : out std_logic_vector(7 downto 0);
+	Cout: out std_logic 
+); 
+end FullAdd;
+
+architecture behavioral of FullAdd is
+	signal Cout_int: std_logic_vector(7 downto 0);
+	begin
+	Sum(0) <= Cin xor (A(0) xor B(0));
+	Cout_int(0) <= (A(0) and B(0)) or (Cin and (A(0) xor B(0)));
+	
+	Sum(1) <= Cout_int(0) xor (A(1) xor B(1));
+	Cout_int(1) <= (A(1) and B(1)) or (Cout_int(0) and (A(1) xor B(1)));
+	
+	Sum(2) <= Cout_int(1) xor (A(2) xor B(2));
+	Cout_int(2) <= (A(2) and B(2)) or (Cout_int(1) and (A(2) xor B(2)));
+	
+	Sum(3) <= Cout_int(2) xor (A(3) xor B(3));
+	Cout_int(3) <= (A(3) and B(3)) or (Cout_int(2) and (A(3) xor B(3)));
+	
+	Sum(4) <= Cout_int(3) xor (A(4) xor B(4));
+	Cout_int(4) <= (A(4) and B(4)) or (Cout_int(3) and (A(4) xor B(4)));
+	
+	Sum(5) <= Cout_int(4) xor (A(5) xor B(5));
+	Cout_int(5) <= (A(5) and B(5)) or (Cout_int(4) and (A(5) xor B(5)));
+	
+	Sum(6) <= Cout_int(5) xor (A(6) xor B(6));
+	Cout_int(6) <= (A(6) and B(6)) or (Cout_int(5) and (A(6) xor B(6)));
+	
+	Sum(7) <= Cout_int(6) xor (A(7) xor B(7));
+	Cout_int(7) <= (A(7) and B(7)) or (Cout_int(6) and (A(7) xor B(7)));
+	
+	Sum(0) <= Cout_int(7) xor (A(0) xor B(0));
+	Cout <= (A(0) and B(0)) or (Cout_int(7) and (A(0) xor B(0)));
+end behavioral;

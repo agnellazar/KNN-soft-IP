@@ -1,0 +1,25 @@
+library ieee;
+use ieee.std_logic_1164.all;
+--type array_stream is array (0 to 7) of std_logic_vector(7 downto 0);
+--type word is array (0 to 31) of bit;
+entity Adder_array is port(
+	in1_arr_str : in array(0 to 7) of std_logic_vector(7 downto 0));
+	in2_arr_str : in array(0 to 7) of std_logic_vector(7 downto 0);
+	out_arr_str : out array(0 to 7)of std_logic_vector(7 downto 0)
+	);
+end;
+
+
+architecture dataflow of Adder_array is 
+component Adder_8bit port(
+	A,B : in std_logic_vector(7 downto 0);
+	Cin : in std_logic; 
+	Sum : out std_logic_vector(7 downto 0);
+	Cout: out std_logic 
+); 
+end component;
+begin
+	GEN_adder_array: for I in (0 to 7) generate
+		Adder_inst: Adder_8bit port map (in1_array(I), in2_array(I), '0', out_arr_str(I), open);  
+	end generate GEN_adder_array;
+end dataflow;
